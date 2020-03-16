@@ -18,16 +18,16 @@ add_btn.addEventListener('click', () => {
 const create_item = () => {
   var item = document.createElement("div");
   item.classList.add("item");
-  item.setAttribute("id", "item-"+order);
-  item.setAttribute("draggable", "true");
+  item.id = "item-"+order;
+  item.draggable = true;
 
 item.addEventListener("dragstart", (event) => {
-  event.DataTransfer.setData('text', event.target.getAttribute('id'));
+  return event.dataTransfer.setData('text', event.target.id);
 });
 
 item.addEventListener("dragend", (event) => {
-  event.DataTransfer.clearData();
-});
+  event.dataTransfer.clearData();
+}, false);
 
 var input = document.createElement('input');
 item.appendChild(input);
@@ -44,19 +44,18 @@ save_btn.addEventListener('click', () => {
   } else {
     error.innerHTML = message;
   }
-});
-
-item.appendChild (save_btn);
+  item.appendChild(save_btn);
+}, false);
 return item;
 };
 
 document.querySelectorAll('.drop').forEach(element => {
   element.addEventListener('drop', (event) => {
     event.preventDefault();
-    const id = event.DataTransfer.getData('text');
+    const id = event.dataTransfer.getData('text');
     event.target.appendChild(document.getElementById(id));
   });
   element.addEventListener('dragover', (event) => {
     event.preventDefault();
-  });
+  }, false);
 });
